@@ -1,0 +1,235 @@
+.landcards{
+    padding-top: 150px;
+    padding-bottom: 80px;
+    background-color: #27104e;
+}
+
+.allcards{
+    display: flex;
+    margin-left: 250px;
+    flex-wrap: wrap;
+}
+
+.allcards>div{
+    margin: 10px 30px;
+}
+
+.desText{
+    padding: 10px;
+}
+
+.topImage{
+    max-width: 370px;
+    padding: 10px 10px;
+    border-radius: 30px;
+    opacity: 0.7;
+}
+
+.topImage1{
+    max-width: 370px;
+    padding: 10px 10px;
+    border-radius: 30px;
+}
+
+.cards{
+    padding-top: 10px;
+    padding-bottom: 50px;
+    background-color: #27104e;
+    max-width: 400px;
+    border-radius: 30px;
+    border: 2px solid #471c91;
+}
+
+.titleName{
+    padding-top: 10px;
+    font-size: 30px;
+    color: white;
+    font-weight: 700;
+    padding-bottom: 10px;
+}
+
+.desText{
+    padding-top: 10px;
+    font-size: 20px;
+    color: white;
+    font-weight: 500;
+    padding-bottom: 10px;
+}
+
+.mintnft{
+    color: white;
+    font-size: 30px;
+    font-weight: 900;
+    max-width: 300px;
+    margin-left: 50px;
+    margin-top: 30px;
+    border-radius: 10px;
+    background-color: #ddacf527;
+    border: 2px solid #ddacf500;
+    transition: border 250ms;
+}
+
+.mintnft:hover{
+    transition: border 250ms;
+    border: 2px solid #ddacf5;
+    cursor: pointer;
+}
+
+.imagezomfi{
+    max-width: 120px;
+}
+
+.details{
+    align-items: center;
+    padding-left: 40px;
+    padding-top: 5px;
+}
+
+.allDSes{
+    display: flex;
+    padding-left: 90px;
+    padding-bottom: 170px;
+}
+
+.titleland{
+    color: #FFFF;
+    font-size: 70px;
+    font-weight: 800;
+}
+
+.descrption{
+    color: #FFFF;
+    font-size: 30px;
+    font-weight: 100;
+    padding-right: 300px;
+}
+
+.imagezomfi{
+    padding-left: 60ex;
+}
+
+.landName{
+    font-size: 30px;
+    font-weight: 700;
+    color: #FFFF;
+    padding-right: 72.6ex;
+    padding-bottom: 30px;
+}
+
+.NFTName{
+    font-size: 30px;
+    color: white;
+    font-weight: 800;
+    padding-left: 20px;
+}
+
+.plotsRemain{
+    font-size: 15px;
+    color: white;
+    font-weight: 600;
+    padding-left: 20px;
+}
+
+.no-border {
+    border: 0 ;
+}
+
+.pricelogo{
+    max-width: 40px;
+    padding-left: 60px;
+    padding-right: 10px;
+}
+
+.middleCard{
+    display: flex;
+    align-items: center;
+}
+
+.priceHeading{
+    color: white;
+    font-size: 16px;
+    font-weight: 100;
+    padding-left: 240px;
+    padding-top: 20px;
+}
+
+.price{
+    font-size: 21px;
+    color: white;
+    font-weight: 900;
+    padding-right: 18px;
+}
+
+.allocated{
+    padding: 10px;
+    border-radius: 10px;
+    border: 2px solid #5825b1;
+    transition: border 250ms;
+    background-color: #ddacf55e;
+    margin: 10px;
+    padding-top: 10px;
+}
+
+.allocated:hover{
+    transition: border 250ms;
+    border: 2px solid #7f35ff;
+    background-color: #ddacf55e;
+}
+
+.allocatedTitle{
+    color: white;
+    font-weight: 400;
+    font-size: 15px;
+}
+
+.mintNft{
+    color: white;
+    font-size: 30px;
+    font-weight: 900;
+    max-width: 400px;
+    margin: 10px;
+    border-radius: 10px;
+    background-color: #ddacf527;
+    border: 2px solid #ddacf500;
+    transition: border 250ms;
+    margin-top: 70px;
+}
+
+.mintNft:hover{
+    cursor: pointer;
+    border-radius: 10px;
+    background-color: #ddacf527;
+    border: 2px solid #ddacf5d8;
+    transition: border 250ms;
+}
+
+.mintprogress{
+    color: white;
+    padding-left: 15px;
+    padding-top: 10px;
+    font-weight: 600;
+}
+
+.minted{
+    padding-left: 15px;
+    color: white;
+    padding-top: 10px;
+    font-size: 13px;
+}
+
+.notconnected{
+    height: 100vh;
+}
+
+.connectYourWallet{
+    font-size: 40px;
+    color: white;
+    font-weight: 800;
+}
+
+.desConnect{
+    font-size: 20px;
+    color: white;
+    font-weight: 600;
+    padding-top: 10px;
+}

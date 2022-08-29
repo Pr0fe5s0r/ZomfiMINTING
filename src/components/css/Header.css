@@ -1,0 +1,122 @@
+.header {
+    color: aliceblue;
+    height: 70px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid #37186d;
+    background-color: #371770;
+    max-width: 100%;
+}
+
+.tags{
+    display: flex;
+    align-items: center;
+}
+
+.tags > div{
+    margin: 30px;
+}
+
+
+.titles{
+    font-size: 30px;
+    font-weight: 600;
+    font-family: 'Trebuchet MS';
+}
+
+.logoContainer{
+    display: flex;
+    align-items: center;
+}
+
+.logoContainer > div{
+    margin: 10px;
+}
+
+.header > div {
+    margin: 5px;
+}
+
+.headerObjects{
+    display: flex;
+}
+
+.headerObjects > p{
+    margin: 10px;
+    justify-content: center;
+    align-items: center;
+}
+
+.myBalance {
+    color: #FFFFFF;
+    font-weight: 700;
+    transition: color 450ms;
+    font-size: 18px;
+    border-radius: 30px;
+}
+
+.contractBalance:hover{
+    transition: transform 450ms;
+    transform: scale(1.08);
+    opacity: 1;
+    cursor: pointer;
+}
+
+.myBalance:hover{
+    transition: color 250ms;
+    opacity: 1;
+    color: #b8b8b8;
+    cursor: pointer;
+}
+
+.walletIcons {
+    max-width: 80px;
+    margin-top: 5px;
+}
+
+.connectButton{
+    color: #FFFFFF;
+    transition: transform 450ms;
+    padding: 7px 30px;
+    font-size: 18px;
+    font-weight: 600;
+    border-radius: 10px;
+    background-color: #9854cb;
+}
+
+.btncarrier{
+    padding-right: 30px;
+}
+
+.zomfilogo{
+    width: 38px;
+    padding-left: 150px;
+}
+
+.zomfilogo:hover{
+    cursor: pointer;
+}
+
+.connectButton:hover {
+    transition: transform 450ms;
+    transform: scale(1.08);
+    opacity: 1;
+    cursor: pointer;
+}
+
+.walletconnected{
+    font-size: 20px;
+    padding: 4px 15px;
+    margin-right: 10px;
+    border-radius: 10px;
+    align-items: center;
+    transition: border 250ms;
+    border: 2px solid #633785;
+}
+
+.walletconnected:hover{
+    border: 2px solid #9854cb;
+    transition: border 250ms;
+    cursor: pointer;
+}

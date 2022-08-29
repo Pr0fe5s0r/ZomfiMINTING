@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  justify-content: center;
 }
 
 .App-logo {
@@ -21,11 +22,23 @@
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: white;
+  color: rgb(255, 0, 0);
 }
 
 .App-link {
   color: #61dafb;
+}
+
+.loader{
+  position: relative;
+  height: 100vh;
+  background-color: #282c34;
+}
+
+.loaderscreen{
+  padding: 22% 47.9%;
+  align-items: 'center';
+  justify-content: 'center';
 }
 
 @keyframes App-logo-spin {

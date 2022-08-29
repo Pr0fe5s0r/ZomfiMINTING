@@ -1,0 +1,64 @@
+.modalOri{
+    margin: auto;
+    padding: 0 2rem;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.cardoption{
+    background-color: #371770;
+    border-radius: 50px;
+    padding: 10px 20px;
+}
+
+.selectwallet{
+    margin: 6px 50px;
+    padding-right: 10px;
+    padding-bottom: 10px;
+    font-size: 50px;
+    font-weight: 800;
+}
+
+.closeX{
+    font-weight: 600;
+    margin-left: 450px;
+    margin-top: 10px;
+    margin-right: 10px;
+    transition: transform 450ms;
+}
+
+.closeX:hover{
+    transition: transform 450ms;
+    cursor: pointer;
+    transform: scale(1.08);
+}
+
+.buttonMetamask{
+    margin-top: 80px;
+    margin-bottom: 10px;
+    padding: 20px 10px;
+    display: flex;
+    border: 2px solid #271152;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 20px;
+    transition: border 250ms;
+}
+
+.buttonMetamask:hover{
+    cursor: pointer;
+    transition: border 250ms;
+    border: 2px solid #5f28be;
+}
+
+.metaLgo{
+    max-width: 46px;
+    padding-right: 10px;
+}
+
+.metamask{
+    font-size: 26px;
+    font-weight: 760;
+}

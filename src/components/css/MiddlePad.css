@@ -1,0 +1,91 @@
+.middlepad{
+    color: aliceblue;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #5823b3;
+    background-color: #27104e;
+    max-width: 100%;
+    max-height: max-content;
+    overflow: hidden;
+    padding-bottom: 80px;
+    flex-direction: row;
+}
+
+.details{
+    white-space:inherit;
+    padding-left: 150px;
+    flex-wrap: wrap;
+}
+
+.titleZomfi{
+    font-size: 100px;
+    font-weight: 700;
+    padding-bottom: 10px;
+}
+
+.descriton{
+    font-size: 20px;
+    font-weight: 200;
+    padding-bottom: 10px;
+    max-width: 660px;
+}
+
+.landImage{
+    max-width: clamp(50%, 100ex, 90%);
+    border-radius: 80px;
+    padding: 40px 40px;
+    transition: transform 450ms;
+    overflow: hidden;
+}
+
+/* .landImage:hover{
+    overflow: hidden;
+    transition: transform 450ms;
+    transform: scale(1.01);
+} */
+
+.playIcon{
+    max-width: 100px;
+    max-height: 50px;
+}
+
+.coinIcon{
+    max-width: 100px;
+    max-height: 50px;
+}
+
+.minttut{
+    display: flex;
+    align-items: center;
+    border-radius: 10px;
+    background-color: #ddacf527;
+    border: 2px solid #ddacf500;
+    transition: border 250ms;
+}
+
+.minttut:hover{
+    transition: border 250ms;
+    border: 2px solid #ddacf5;
+    cursor: pointer;
+}
+
+.nametut{
+    padding-right: 20px;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.btngroup{
+    display: flex;
+    align-items: center;
+    padding-top: 50px;
+}
+
+.btngroup > div{
+    margin: 10px;
+}
+
+.staking{
+    margin: 40px 30px;
+}

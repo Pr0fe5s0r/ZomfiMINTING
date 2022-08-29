@@ -1,0 +1,158 @@
+.walletModal{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 1px 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 20px;
+    transition: border 250ms;
+}
+
+.wallet{
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.disconnect{
+    font-size: 20px;
+    font-weight: 700;
+    background-color: #5f28be;
+    padding: 20px;
+    border-radius: 20px;
+    border: 2px solid #3a1679;
+    transition: border 250ms;
+}
+
+.disconnect:hover{
+    transition: border 250ms;
+    border: 2px solid #7f35ff;
+    cursor: pointer;
+}
+
+.account{
+    margin: 2px 8px;
+    font-size: 30px;
+    font-weight: 800;
+}
+
+.accountCarrier{
+    background-color: #3818706b;
+    border: 2px solid #9558ff65;
+    border-radius: 10px;
+    margin-left: 10px;
+    margin-right: 70px;
+    margin-bottom: 10px
+}
+
+.contents{
+    display: flex;
+    border-bottom: 1px solid #9558ff65;
+}
+
+.myLnads{
+    padding-top: 10px;
+    border-bottom: 1px solid #9558ff65;
+    bottom: 5px;
+}
+
+.imageLandbal{
+    max-width: 120px;
+    border-radius: 15px;
+}
+
+.commonLand{
+    padding-top: 10px;
+    display: flex;
+}
+
+.baltitle{
+    display: flex;
+    font-size: 20px;
+    padding-top: 5px;
+    font-weight: 600;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #9558ff65;
+}
+
+.imgTitle{
+    padding-left: 30px;
+}
+
+.counttitle{
+    padding-left: 50px;
+}
+
+.NameTitle{
+    padding-left: 90px;
+}
+
+.totpricetitle{
+    padding-left: 30px;
+}
+
+.allLands{
+    justify-content: center;
+    align-items: center;
+    border-bottom: 1px solid #9558ff65;
+}
+
+.nobala{
+    margin-bottom: 10px;
+    border-bottom: 1px solid #9558ff65;
+}
+
+.landname{
+    padding-left: 50px;
+}
+
+.landcount{
+    padding-left: 80px;
+}
+
+.landprice{
+    padding-left: 90px;
+}
+
+.rlandcount{
+    padding-left: 115px;
+}
+
+.llandname{
+    padding-left: 50px;
+}
+
+.llandcount{
+    padding-left: 75px;
+}
+
+.thereisno{
+    font-size: 30px;
+    font-weight: 800;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.Landpetsbtn{
+    display: flex;
+    align-items: center;
+}
+
+.Landpetsbtn > div{
+    margin-left: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 10px 10px;
+    font-size: 30px;
+    font-weight: 760;
+    background-color: #9558ff65;
+    border-radius: 20px;
+    transition: border 250ms;
+    border: 2px solid #7e2d8600;
+}
+
+.Landpetsbtn > div:hover{
+    border: 2px solid #7f2d86;
+    transition: border 250ms;
+    cursor: pointer;
+}
