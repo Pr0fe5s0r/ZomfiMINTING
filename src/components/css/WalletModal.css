@@ -48,6 +48,7 @@
 .contents{
     display: flex;
     border-bottom: 1px solid #9558ff65;
+    padding-top: 20px;
 }
 
 .myLnads{
@@ -62,10 +63,17 @@
 }
 
 .commonLand{
-    padding-top: 10px;
     display: flex;
+    justify-content: space-between;
 }
 
+.rlandname{
+    padding-right: 35px;
+}
+
+.rlandcount{
+    padding-right: 15px;
+}
 .baltitle{
     display: flex;
     font-size: 20px;
@@ -73,6 +81,7 @@
     font-weight: 600;
     padding-bottom: 10px;
     border-bottom: 1px solid #9558ff65;
+    justify-content: space-between;
 }
 
 .imgTitle{
@@ -102,30 +111,6 @@
     border-bottom: 1px solid #9558ff65;
 }
 
-.landname{
-    padding-left: 50px;
-}
-
-.landcount{
-    padding-left: 80px;
-}
-
-.landprice{
-    padding-left: 90px;
-}
-
-.rlandcount{
-    padding-left: 115px;
-}
-
-.llandname{
-    padding-left: 50px;
-}
-
-.llandcount{
-    padding-left: 75px;
-}
-
 .thereisno{
     font-size: 30px;
     font-weight: 800;
@@ -136,6 +121,10 @@
 .Landpetsbtn{
     display: flex;
     align-items: center;
+}
+
+.alldet{
+    display: flex;
 }
 
 .Landpetsbtn > div{
@@ -154,5 +143,44 @@
 .Landpetsbtn > div:hover{
     border: 2px solid #7f2d86;
     transition: border 250ms;
+    cursor: pointer;
+}
+
+.titlewc{
+    font-weight: 700;
+}
+
+.commonwcinput{
+    padding-left: 10px;
+}
+
+.inu{
+    padding: 5px 5px;
+    width: 25%;
+    background-color: #a36eff;
+    border: none;
+    outline: none;
+    border-radius: 3px;
+    font-weight: 600;
+    color: white;
+}
+
+.wccontainer>div{
+    padding: 10px 10px;
+}
+
+.approveButton{
+    background-color: #7f2d86;
+    margin-right: 80%;
+    margin-left: 10px;
+    border-radius: 10px;
+    transition: background-color 250ms;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.approveButton:hover{
+    background-color: #df51ec;
+    transition: background-color 250ms;
     cursor: pointer;
 }

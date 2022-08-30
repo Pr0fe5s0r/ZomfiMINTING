@@ -7,7 +7,7 @@ import {AnimatePresence} from "framer-motion";
 import {ethers} from "ethers";
 import {useHistory } from "react-router-dom";
 
-let erc721token = "0xF112EfdA92bFE834b744eb69B1eA56Cc09C24A87";
+let erc721token = "0x42a88Afe081769C12985b607aA306c82053821bA";
 let erc721ABI =[
 	{
 		"anonymous": false,
@@ -132,6 +132,19 @@ let erc721ABI =[
 		"inputs": [
 			{
 				"internalType": "address",
+				"name": "_addr",
+				"type": "address"
+			}
+		],
+		"name": "addManager",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
 				"name": "to",
 				"type": "address"
 			},
@@ -142,6 +155,34 @@ let erc721ABI =[
 			}
 		],
 		"name": "approve",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address[]",
+				"name": "_addr",
+				"type": "address[]"
+			},
+			{
+				"internalType": "uint256[]",
+				"name": "_com",
+				"type": "uint256[]"
+			},
+			{
+				"internalType": "uint256[]",
+				"name": "_rare",
+				"type": "uint256[]"
+			},
+			{
+				"internalType": "uint256[]",
+				"name": "_legend",
+				"type": "uint256[]"
+			}
+		],
+		"name": "BulkwhiteListNFTByManager",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
@@ -183,6 +224,19 @@ let erc721ABI =[
 	{
 		"inputs": [],
 		"name": "renounceOwnership",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_addr",
+				"type": "address"
+			}
+		],
+		"name": "revokeManager",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
@@ -334,6 +388,34 @@ let erc721ABI =[
 			}
 		],
 		"name": "whiteListNFT",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_addr",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_com",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_rare",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_legend",
+				"type": "uint256"
+			}
+		],
+		"name": "whiteListNFTByManager",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
@@ -524,6 +606,25 @@ let erc721ABI =[
 			}
 		],
 		"name": "isApprovedForAll",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_addr",
+				"type": "address"
+			}
+		],
+		"name": "isManagerOfCon",
 		"outputs": [
 			{
 				"internalType": "bool",
@@ -1087,7 +1188,7 @@ function Header({walletOn, showAccount, accountCarrier, disconnectwallet, open, 
     useEffect(()=>{
         if(walletOn)
         {
-            async function getMyNFTCount(){
+            async function getMyNFtCount(){
                 let alloc = await erc721Contract.getMyNFTCount();
                 console.log(alloc);
     
@@ -1095,7 +1196,7 @@ function Header({walletOn, showAccount, accountCarrier, disconnectwallet, open, 
                 setrarebal(alloc[1].toString());
                 setlegendbal(alloc[2].toString());
             }
-            getMyNFTCount();
+            getMyNFtCount();
         }
     })
 

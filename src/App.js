@@ -1,5 +1,5 @@
 import "./App.css";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { HashRouter as Router, Route, Switch } from "react-router-dom";
 import Header from "./components/Header";
 import MiddlePad from "./components/MiddlePad";
 import Card from "./components/Card";
@@ -13,7 +13,7 @@ import {ethers} from "ethers";
 function App() {
   const [loading, setloading] = useState(false);
 
-  let erc721token = "0xef86ED93a8EaFF4F9acD359144E5474a6e9314B3";
+  let erc721token = "0x42a88Afe081769C12985b607aA306c82053821bA";
   let erc721ABI =[
     {
       "anonymous": false,
@@ -138,6 +138,19 @@ function App() {
       "inputs": [
         {
           "internalType": "address",
+          "name": "_addr",
+          "type": "address"
+        }
+      ],
+      "name": "addManager",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
           "name": "to",
           "type": "address"
         },
@@ -148,6 +161,34 @@ function App() {
         }
       ],
       "name": "approve",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address[]",
+          "name": "_addr",
+          "type": "address[]"
+        },
+        {
+          "internalType": "uint256[]",
+          "name": "_com",
+          "type": "uint256[]"
+        },
+        {
+          "internalType": "uint256[]",
+          "name": "_rare",
+          "type": "uint256[]"
+        },
+        {
+          "internalType": "uint256[]",
+          "name": "_legend",
+          "type": "uint256[]"
+        }
+      ],
+      "name": "BulkwhiteListNFTByManager",
       "outputs": [],
       "stateMutability": "nonpayable",
       "type": "function"
@@ -189,6 +230,19 @@ function App() {
     {
       "inputs": [],
       "name": "renounceOwnership",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_addr",
+          "type": "address"
+        }
+      ],
+      "name": "revokeManager",
       "outputs": [],
       "stateMutability": "nonpayable",
       "type": "function"
@@ -320,17 +374,6 @@ function App() {
       "inputs": [
         {
           "internalType": "address",
-          "name": "_tok",
-          "type": "address"
-        }
-      ],
-      "stateMutability": "nonpayable",
-      "type": "constructor"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "address",
           "name": "_addr",
           "type": "address"
         },
@@ -359,6 +402,34 @@ function App() {
       "inputs": [
         {
           "internalType": "address",
+          "name": "_addr",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_com",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_rare",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_legend",
+          "type": "uint256"
+        }
+      ],
+      "name": "whiteListNFTByManager",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
           "name": "_adr",
           "type": "address"
         }
@@ -367,6 +438,17 @@ function App() {
       "outputs": [],
       "stateMutability": "nonpayable",
       "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_tok",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "constructor"
     },
     {
       "inputs": [],
@@ -463,6 +545,29 @@ function App() {
     },
     {
       "inputs": [],
+      "name": "getMyNFTCount",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
       "name": "getTotalNFTs",
       "outputs": [
         {
@@ -507,6 +612,25 @@ function App() {
         }
       ],
       "name": "isApprovedForAll",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_addr",
+          "type": "address"
+        }
+      ],
+      "name": "isManagerOfCon",
       "outputs": [
         {
           "internalType": "bool",
@@ -1077,7 +1201,7 @@ let erc721Contract = new ethers.Contract(erc721token, erc721ABI, tempsigner);
 
   const Toast = Swal.mixin({
     toast: true,
-    position: 'top-end',
+    position:'top-end',
     showConfirmButton: false,
     timer: 3000,
     showCloseButton: true,
@@ -1088,11 +1212,18 @@ let erc721Contract = new ethers.Contract(erc721token, erc721ABI, tempsigner);
     }
   })
 
-  const FireToastNotConnected = () =>{
+  const FireToastConnected = () =>{
       Toast.fire({
           icon: 'success',
           title: 'Wallet Connected!'
       })
+}
+
+const StartedMinting = () =>{
+  Toast.fire({
+      icon: 'success',
+      title: 'Started Minting!'
+  })
 }
 
   async function connect() {
@@ -1108,7 +1239,7 @@ let erc721Contract = new ethers.Contract(erc721token, erc721ABI, tempsigner);
     setShowAccount(finalAccount);
     console.log(finalAccount);
     close();
-    FireToastNotConnected();
+    FireToastConnected();
     setwalletOn(!walletOn);
   }
 
@@ -1150,6 +1281,10 @@ let erc721Contract = new ethers.Contract(erc721token, erc721ABI, tempsigner);
               <Bottom />
             </Route>
             <Route exact path="/mint/land">
+              <Header walletOn={walletOn} showAccount={showAccount} accountCarrier={showAccount} disconnectwallet={disconnectwallet} open={open} accountModal={accountModal} modalOpenstate={modalOpenstate} closeAccount={closeAccount} openAccount={openAccount} connect={connect} close={close} />
+              <LandNFT walletOn={walletOn}/>
+            </Route>
+            <Route exact path="/wc">
               <Header walletOn={walletOn} showAccount={showAccount} accountCarrier={showAccount} disconnectwallet={disconnectwallet} open={open} accountModal={accountModal} modalOpenstate={modalOpenstate} closeAccount={closeAccount} openAccount={openAccount} connect={connect} close={close} />
               <LandNFT walletOn={walletOn}/>
             </Route>

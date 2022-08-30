@@ -32,6 +32,14 @@ function Card({iswalletConnected}) {
             history.push("/mint/land")
         }
     }
+
+    function CommingSoon(){
+        Swal.fire({
+            title: 'Comming Soon!',
+            icon: "info",
+          })
+    }
+
   return (
     <div className='maincards'>
         <div className='allcards'>
@@ -65,7 +73,7 @@ function Card({iswalletConnected}) {
                         <div>Weapon is the Key of winning in a fight. Mint your own Weapon for your Game here.</div>
                     </div>
                     <div className='mintnft'>
-                        <div className='buttonName'>Mint NFT</div>
+                        <div className='buttonName' onClick={()=> CommingSoon()}>Mint NFT</div>
                     </div>
                 </div>
             </div>
@@ -82,7 +90,7 @@ function Card({iswalletConnected}) {
                         <div>Pets are the once which we love and which love us. And they also protect us. Mint your own pets here.</div>
                     </div>
                     <div className='mintnft'>
-                        <div className='buttonName'>Mint NFT</div>
+                        <div className='buttonName' onClick={()=> CommingSoon()}>Mint NFT</div>
                     </div>
                 </div>
             </div>

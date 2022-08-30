@@ -1,13 +1,12 @@
-import {motion} from "framer-motion";
-import Backdrop from "./Backdrop";
-import React,{useEffect, useState, useRef} from 'react'
-import "./css/Modal.css"
-import "./css/WalletModal.css"
+import React, { useEffect, useState } from 'react'
+import logo from "../assets/zomfi.png"
 import land from "../assets/land.jpg"
-import Swal from "sweetalert2";
+import {useHistory } from "react-router-dom";
+import "./css/LandNFT.css"
 import {ethers} from "ethers";
+import Swal from "sweetalert2"
 
-let erc721token = "0x42a88Afe081769C12985b607aA306c82053821bA";
+let erc721token = "0xF112EfdA92bFE834b744eb69B1eA56Cc09C24A87";
 let erc721ABI =[
 	{
 		"anonymous": false,
@@ -132,19 +131,6 @@ let erc721ABI =[
 		"inputs": [
 			{
 				"internalType": "address",
-				"name": "_addr",
-				"type": "address"
-			}
-		],
-		"name": "addManager",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
 				"name": "to",
 				"type": "address"
 			},
@@ -155,34 +141,6 @@ let erc721ABI =[
 			}
 		],
 		"name": "approve",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address[]",
-				"name": "_addr",
-				"type": "address[]"
-			},
-			{
-				"internalType": "uint256[]",
-				"name": "_com",
-				"type": "uint256[]"
-			},
-			{
-				"internalType": "uint256[]",
-				"name": "_rare",
-				"type": "uint256[]"
-			},
-			{
-				"internalType": "uint256[]",
-				"name": "_legend",
-				"type": "uint256[]"
-			}
-		],
-		"name": "BulkwhiteListNFTByManager",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
@@ -224,19 +182,6 @@ let erc721ABI =[
 	{
 		"inputs": [],
 		"name": "renounceOwnership",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "_addr",
-				"type": "address"
-			}
-		],
-		"name": "revokeManager",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
@@ -388,34 +333,6 @@ let erc721ABI =[
 			}
 		],
 		"name": "whiteListNFT",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "_addr",
-				"type": "address"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_com",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_rare",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_legend",
-				"type": "uint256"
-			}
-		],
-		"name": "whiteListNFTByManager",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
@@ -606,25 +523,6 @@ let erc721ABI =[
 			}
 		],
 		"name": "isApprovedForAll",
-		"outputs": [
-			{
-				"internalType": "bool",
-				"name": "",
-				"type": "bool"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "_addr",
-				"type": "address"
-			}
-		],
-		"name": "isManagerOfCon",
 		"outputs": [
 			{
 				"internalType": "bool",
@@ -880,7 +778,7 @@ let erc721ABI =[
 		"stateMutability": "view",
 		"type": "function"
 	}
-]
+];
 
 let erc20Token = "0xF78bFa5013046a1ced185D27C4F3beA2f1625935";
 let erc20ABI = [
@@ -1177,64 +1075,115 @@ let tempsigner = provider.getSigner();
 let erc20Contract = new ethers.Contract(erc20Token, erc20ABI, tempsigner);
 let erc721Contract = new ethers.Contract(erc721token, erc721ABI, tempsigner);
 
+function WC({walletOn}) {
+    let history = useHistory();
 
-function WalletModal({gcase, handleClose, account, disconnect, commonbal, rarebal, legenbal}) {
+    const [reCommonland, setreCommonLad] = useState("0");
+    const [reRareland, setreRareLad] = useState("0");
+    const [reLegendland, setreLegendLad] = useState("0");
 
-    const [balance, setbalance] = useState(false);
+    const [minCommonland, setminCommonLad] = useState("0");
+    const [minRareland, setminRareLad] = useState("0");
+    const [minLegendland, setminLegendLad] = useState("0");
 
-    const [pcommon, setpcommon] = useState("0");
-    const [prare, setprare] = useState("0");
-    const [plegend, setplegend] = useState("0");
+    const [alCommonland, setalCommonLad] = useState("0");
+    const [alRareland, setalRareLad] = useState("0");
+    const [alLegendland, setalLegendLad] = useState("0");
 
-	const address = useRef(null);
-	const common = useRef(null);
-	const rare = useRef(null);
-	const legend = useRef(null);
-
-
-    const [isLandorpet, setisLandOrPet] = useState(false);
-	const [iswc, setiswc] = useState(false);
-
-    const [erc20bala, setErc20Bal] = useState("0");
-
-	const [ismanager, setismanager] = useState(false);
+    const [onTransaction, setOnTransaction] = useState(false);
 
     useEffect(() => {
-        if(parseInt(commonbal) >0 || parseInt(rarebal) >0 || parseInt(legenbal) >0)
+        if(walletOn)
         {
-            setbalance(true);
-            setpcommon((parseInt(commonbal) * 0.3).toString());
-            setprare((parseInt(rarebal) * 0.6).toString());
-            setplegend((parseInt(legenbal) * 0.9).toString());
-        }
-        if(gcase)
-        {
-            document.body.style.overflow = "hidden"
-        }
+            async function GetRemainLand(){
+                let bignum1 = await erc721Contract.totCommon();
+                setreCommonLad(bignum1.toString());
+    
+                let bignum2 = await erc721Contract.totRare();
+                setreRareLad(bignum2.toString());
+    
+                let bignum3 = await erc721Contract.totLegend();
+                setreLegendLad(bignum3.toString());
+            }
+			
 
-        async function GetBalanceof(){
-            let accountss = await window.ethereum.request({
-                method: "eth_requestAccounts",
-              });
-            var accounts = accountss[0];
-            let balance = await erc20Contract.balanceOf(accounts);
-            setErc20Bal(parseFloat((balance)/10**18).toString());
+            async function TotalMinted(){
+                let bignum1 = await erc721Contract.minCommon();
+                setminCommonLad(bignum1.toString());
+    
+                let bignum2 = await erc721Contract.minRare();
+                setminRareLad(bignum2.toString());
+    
+                let bignum3 = await erc721Contract.minLegend();
+                setminLegendLad(bignum3.toString());
+            }
+            TotalMinted();
+            GetAllocatedAmount();
+            GetRemainLand();
         }
+    }, [walletOn])
 
-		async function isMnager(){
-            let accountss = await window.ethereum.request({
-                method: "eth_requestAccounts",
-              });
-            var accounts = accountss[0];
-            let isman = await erc721Contract.isManagerOfCon(accounts);
-            if(isman == true)
-			{
-				setismanager(true);
-			}
-        }
-        GetBalanceof();
-		isMnager();
-    }, [gcase])
+    async function GetRemainLand(){
+        let bignum1 = await erc721Contract.totCommon();
+        setreCommonLad(bignum1.toString());
+
+        let bignum2 = await erc721Contract.totRare();
+        setreRareLad(bignum2.toString());
+
+        let bignum3 = await erc721Contract.totLegend();
+        setreLegendLad(bignum3.toString());
+    }
+
+    async function GetAllocatedAmount(){
+        let alloc = await erc721Contract.getAllocatedAmount();
+        console.log(alloc);
+
+        setalCommonLad(alloc[0].toString());
+        setalRareLad(alloc[1].toString());
+        setalLegendLad(alloc[2].toString());
+    }
+
+    async function TotalMinted(){
+        let bignum1 = await erc721Contract.minCommon();
+        setminCommonLad(bignum1.toString());
+
+        let bignum2 = await erc721Contract.minRare();
+        setminRareLad(bignum2.toString());
+
+        let bignum3 = await erc721Contract.minLegend();
+        setminLegendLad(bignum3.toString());
+    }
+
+    function LoadingScrren() {
+        Swal.fire({
+            title: 'Started Minting',
+			icon: "success",
+            customClass: {
+              icon: 'no-border'
+            }
+          })
+    }
+
+	function ApproveTheAmount() {
+        Swal.fire({
+            title: 'Please Approve the Amount!',
+			icon: "info",
+            customClass: {
+              icon: 'no-border'
+            }
+          })
+    }
+
+    function Decilend() {
+        Swal.fire({
+            title: 'Transaction Denied!',
+            icon: "info",
+            customClass: {
+              icon: 'no-border'
+            }
+          })
+          setOnTransaction(false);
+    }
 
     function Success() {
         Swal.fire({
@@ -1244,11 +1193,12 @@ function WalletModal({gcase, handleClose, account, disconnect, commonbal, rareba
               icon: 'no-border'
             }
           })
+          setOnTransaction(false);
     }
 
-    function pleaseCheck() {
+    function OnTransaction(){
         Swal.fire({
-            title: 'Please Check the inputs!',
+            title: 'Please Wait! On Transaction!',
             icon: "error",
             customClass: {
               icon: 'no-border'
@@ -1256,251 +1206,306 @@ function WalletModal({gcase, handleClose, account, disconnect, commonbal, rareba
           })
     }
 
-    const Toast = Swal.mixin({
-        toast: true,
-        position: 'top-end',
-        showConfirmButton: false,
-        timer: 3000,
-        showCloseButton: true,
-        timerProgressBar: true,
-        didOpen: (toast) => {
-          toast.addEventListener('mouseenter', Swal.stopTimer)
-          toast.addEventListener('mouseleave', Swal.resumeTimer)
-        }
-    })
-    
-    const PleaseWait = () =>{
-        Toast.fire({
-            icon: 'info',
-            title: 'Please Wait for Transaction to Complete!'
-    })
-    }
-
-    async function ApproveWhiteList(address, com, rare, legen){
-        if(address != "" && com != "" && rare != "" && legen != "")
-        {
-            let isman = await erc721Contract.whiteListNFTByManager(address, com, rare, legen);
-            PleaseWait();
-            let rec = await isman.wait();
-            Success();
-        }
-        else{
-            pleaseCheck();
-        }
-    }
-    
-
-    const dropIn = {
-        hidden:{
-            y: "-100vh",
-            opacity: 0,
-        },
-        visible:{
-            y:"0",
-            opacity:1,
-            transition:{
-                duration: 0.1,
-                type: "spring",
-                damping: 100,
-                stiffness: 500,
+	function MoreThanAllocated(){
+        Swal.fire({
+            title: 'More than Allocated',
+            icon: "error",
+            customClass: {
+              icon: 'no-border'
             }
-        },
-        exit:{
-            y:"100vh",
-            opacity: 0,
-        },
-    };
+          })
+    }
+    async function MintCommonNFT(){
+        if(onTransaction == false)
+        {
+			GetAllocatedAmount();
+			if(alCommonland > 0)
+			{
+				let amount = (3* 10**17).toString();
+				setOnTransaction(true);
+				let accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
+				let account = accounts[0];
+				try{
+					let allowance = await erc20Contract.allowance(account, erc721token)
+					console.log(allowance.toString())
+					console.log(amount);
+					ApproveTheAmount();
+					if(allowance.toString() < amount){
+						let tx = await ApproveAmount(amount);
+						console.log(tx);
+						MintCommonNFT();
+					}
+					else{
+						try{
+							let erc721Contract = new ethers.Contract(erc721token, erc721ABI, tempsigner);
+							LoadingScrren();
+							let re = await erc721Contract.MintCommonLand();
+							let rec = await re.wait();
+							Success();
+							TotalMinted();
+							GetAllocatedAmount();
+							GetRemainLand();
+							return rec;
+						}catch(err)
+						{
+							Decilend();
+						}
+					}
+				}catch(err)
+				{
+					Decilend();
+				}
+			}
+			else{
+				MoreThanAllocated();
+			}
+		}else{
+			OnTransaction();
+		}
+    }
 
+	async function MintRareNFT(){
+        if(onTransaction == false)
+        {
+			GetAllocatedAmount();
+			if(alRareland > 0)
+			{
+				let amount = (6* 10**17).toString();
+				setOnTransaction(true);
+				let accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
+				let account = accounts[0];
+				try{
+					let allowance = await erc20Contract.allowance(account, erc721token)
+					console.log(allowance.toString())
+					console.log(amount);
+					ApproveTheAmount();
+					if(allowance.toString() < amount){
+						let tx = await ApproveAmount(amount);
+						console.log(tx);
+						MintRareNFT();
+					}
+					else{
+						try{
+							let erc721Contract = new ethers.Contract(erc721token, erc721ABI, tempsigner);
+							LoadingScrren();
+							let re = await erc721Contract.MintRareLand();
+							let rec = await re.wait();
+							Success();
+							TotalMinted();
+							GetAllocatedAmount();
+							GetRemainLand();
+							return rec;
+						}catch(err)
+						{
+							Decilend();
+						}
+					}
+				}catch(err)
+				{
+					Decilend();
+				}
+			}
+			else{
+				MoreThanAllocated();
+			}
+		}else{
+			OnTransaction();
+		}
+    }
+
+	async function MintLegendNFT(){
+        if(onTransaction == false)
+        {
+			GetAllocatedAmount();
+			if(alLegendland > 0)
+			{
+				let amount = (9* 10**17).toString();
+				setOnTransaction(true);
+				let accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
+				let account = accounts[0];
+				try{
+					let allowance = await erc20Contract.allowance(account, erc721token)
+					console.log(allowance.toString())
+					console.log(amount);
+					ApproveTheAmount();
+					if(allowance.toString() < amount){
+						let tx = await ApproveAmount(amount);
+						console.log(tx);
+						MintLegendNFT();
+					}
+					else{
+						try{
+							let erc721Contract = new ethers.Contract(erc721token, erc721ABI, tempsigner);
+							LoadingScrren();
+							let re = await erc721Contract.MintLegendLand();
+							let rec = await re.wait();
+							Success();
+							TotalMinted();
+							GetAllocatedAmount();
+							GetRemainLand();
+							return rec;
+						}catch(err)
+						{
+							Decilend();
+						}
+					}
+				}catch(err)
+				{
+					Decilend();
+				}
+			}
+			else{
+				MoreThanAllocated();
+			}
+		}else{
+			OnTransaction();
+		}
+    }
+
+    async function ApproveAmount(amount){
+        let bignum = await erc20Contract.approve(erc721token, amount);
+        let recept = await bignum.wait();
+        console.log(recept);
+        return recept.transactionHash;
+    }
   return (
-    <Backdrop onClick={handleClose}>
-        <motion.div onClick={(e)=> e.stopPropagation()} 
-            className="modalOri"
-            variants={dropIn}
-            initial="hidden"
-            animate="visible"
-            exit="exit"
-        >
-                <div className="cardoption">
-                    <div className="contents">
-                        <div className="accountCarrier">
-                            <div className="account" align={'left'}>
-                                Your Wallet
-                            </div>
-                            <div className="walletModal">
-                                <div className="wallet">
-                                    {account}
-                                </div>
-                            </div>
-                        </div>
-                        <div className="accountCarrier" align={'right'}>
-                            <div className="account" align={'left'}>
-                                ZOMFI
-                            </div>
-                            <div className="walletModal">
-                                <div className="wallet">
-                                    {erc20bala}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="Landpetsbtn">
-                        <div className="land" style={{backgroundColor: isLandorpet && "#a16cfd"}} onClick={()=>{
-							setisLandOrPet(!isLandorpet)
-							setiswc(iswc)
-							}}>
-                            Lands
-                        </div>
-                        <div className="pets" style={{backgroundColor: !isLandorpet && "#a16cfd"}} onClick={()=>{
-							setisLandOrPet(!isLandorpet)
-							setiswc(iswc)
-							}}>
-                            Pets
-                        </div>
-						{ismanager && <div className="whitelist" style={{backgroundColor: iswc && "#a16cfd"}} onClick={()=>{
-							setiswc(!iswc)
-							}}>
-                            WhitList
-                        </div>}
-                    </div>
-					{iswc && <div className="wccontainer">
-						<div className="titlewc" align={"left"}>
-							Enter the Address:
-							<div className="commonwcinput">
-							<input 
-							 className="inu" 
-							 align={"left"}
-							 ref={address}
-							 placeholder="0xadhkn37shi5jm2kd"
-							 type="text"
-							 id="message"
-							 name="message"/>
-							</div>
-						</div>
-						<div className="titlewc" align={"left"}>
-							Common Land:
-							<div className="commonwcinput">
-							<input 
-							 className="inu" 
-							 align={"left"}
-							 placeholder="2"
-							 ref={common}
-							 type="text"
-							 id="message"
-							 name="message"/>
-							</div>
-						</div>
-						<div className="titlewc" align={"left"}>
-							Rare Land:
-							<div className="commonwcinput">
-							 <input 
-							 className="inu" 
-							 align={"left"}
-							 placeholder="2"
-							 ref={rare}
-							 type="text"
-							 id="message"
-							 name="message"/>
-							</div>
-						</div>
-						<div className="titlewc" align={"left"}>
-							Legend Land:
-							<div className="commonwcinput">
-							<input 
-							 className="inu" 
-							 align={"left"}
-							 placeholder="2"
-							 ref={legend}
-							 type="text"
-							 id="message"
-							 name="message"/>
-							</div>
-						</div>
-						<div className="approveButton" onClick={()=>{
-                            ApproveWhiteList(address.current.value, common.current.value, rare.current.value, legend.current.value);
-							}}>
-                            Approve
-                        </div>
-					</div>}
-                    <div className="myLnads">
-                        {isLandorpet && 
-                        <div className="account" align={'left'}>
-                            My Lands:
-                        </div>}
+    <div className='landcards'>
+    {walletOn &&
+    <div>
+        <div className='allDSes'>
+            <div className='titleLandNFT'>
+                <img className='imagezomfi' src={logo} alt='' />
+            </div>
+            <div className='details'>
+                <div className='titleland' align={"left"}>
+                    Mint Zomfi Land NFTs
+                </div>
+                <div className='descrption' align={"left"}>
+                    Choose the land type you would like to mint. 
+                    Your owned land NFTs will appear below.
+                </div>
+            </div>
+        </div>
 
-                        {!isLandorpet && 
-                        <div className="account" align={'left'}>
-                            My Pets:
-                        </div>}
+        <div className='landName'>
+            Swamp Land Sale
+        </div>
+
+        <div className='allcards'>
+            <div className='cards'>
+                <div className='imageContainer'>
+                    <img className='topImage1' src={land} alt='' /> 
+                </div>
+                <div className='textdetails'>
+                    <div className='NFTName' align={"left"}>
+                        <div>Common Land</div>
                     </div>
-                    <div className="baltitle">
-                        <div className="imgTitle">Image</div>
-                        <div className="NameTitle">Name</div>
-                        <div className="counttitle">Count</div>
-                        <div className="totpricetitle">Total Price</div>
-                    </div>
-                    {balance && isLandorpet && <div className="allLands">
-                            <div className="commonLand">
-                                <div className="image">
-                                    <img className="imageLandbal" src={land} alt="" />
-                                </div>
-                                  <div className="landname" align={"left"}>
-                                      Common
-                                  </div>
-                                  <div className="landcount">
-                                      {commonbal}
-                                  </div>
-                                  <div className="landprice">
-                                      {pcommon}
-								  </div>
-                            </div>
-                            <div className="commonLand">
-                                <div className="image">
-                                    <img className="imageLandbal" src={land} alt="" />
-                                </div>
-                                <div className="rlandname">
-                                 Rare
-                                </div>
-                                <div className="landcount">
-                                    {rarebal}
-                                </div>
-                                <div className="landprice">
-                                    {prare}
-                                </div>
-                            </div>
-                            <div className="commonLand">
-                                <div className="image">
-                                    <img className="imageLandbal" src={land} alt="" />
-                                </div>
-                                <div className="landname">
-                                    Legendary
-                                </div>
-                                <div className="rlandcount">
-                                    {legenbal}
-                                </div>
-                                <div className="landprice">
-                                    {plegend}
-                                </div>
-                            </div>
-                    </div>}
-
-                    {balance && !isLandorpet && <div className="nobala">
-                        <div className="thereisno">Pets are Coming Soon!</div>
-                    </div>}
-
-                    {!balance && 
-                    <div className="nobala">
-                        <div className="thereisno">There is no Content!</div>
-                    </div>}
-
-                    <div className="disconnect" onClick={disconnect}>
-                        <div className="title">
-                            Disconnect
+                    <div className='priceHeading'>Price</div>
+                    <div className='middleCard' align={"left"}>
+                        <div className='plotsRemain'>{reCommonland} Plots Remaining</div>
+                        <div>
+                            <img className='pricelogo' src={logo} alt='' />
                         </div>
+                        <div className='price'>0.3 ZOM</div>
+                    </div>
+                    <div className='allocated'>
+                        <div className='allocatedTitle'>{alCommonland} allocated nft for you.</div>
+                    </div>
+                    <div className='mintprogress' align={"left"}>
+                        Mint In Progress
+                    </div>
+                    <div className='minted' align={"left"}>
+                        {minCommonland}/4600 Common Land minted
+                    </div>
+                    <div className='mintNft'>
+                        <div className='buttonName' onClick={()=>MintCommonNFT()}>Mint NFT</div>
                     </div>
                 </div>
-        </motion.div>
-    </Backdrop>
+            </div>
+            <div className='cards'>
+                <div className='imageContainer'>
+                    <img className='topImage1' src={land} alt='' /> 
+                </div>
+                <div className='textdetails'>
+                    <div className='NFTName' align={"left"}>
+                        <div>Rare Land</div>
+                    </div>
+                    <div className='priceHeading'>Price</div>
+                    <div className='middleCard' align={"left"}>
+                        <div className='plotsRemain'>{reRareland} Plots Remaining</div>
+                        <div>
+                            <img className='pricelogo' src={logo} alt='' />
+                        </div>
+                        <div className='price'>0.6 ZOM</div>
+                    </div>
+                    <div className='allocated'>
+                        <div className='allocatedTitle'>{alRareland} allocated nft for you.</div>
+                    </div>
+                    <div className='mintprogress' align={"left"}>
+                        Mint In Progress
+                    </div>
+                    <div className='minted' align={"left"}>
+                        {minRareland}/1600 Rare Land minted
+                    </div>
+                    <div className='mintNft'>
+                        <div className='buttonName' onClick={()=>MintRareNFT()}>Mint NFT</div>
+                    </div>
+                </div>
+            </div>
+            <div className='cards'>
+                <div className='imageContainer'>
+                    <img className='topImage1' src={land} alt='' /> 
+                </div>
+                <div className='textdetails'>
+                    <div className='NFTName' align={"left"}>
+                        <div>Legendary Land</div>
+                    </div>
+                    <div className='priceHeading'>Price</div>
+                    <div className='middleCard' align={"left"}>
+                        <div className='plotsRemain'>{reLegendland} Plots Remaining</div>
+                        <div>
+                            <img className='pricelogo' src={logo} alt='' />
+                        </div>
+                        <div className='price'>0.9 ZOM</div>
+                    </div>
+                    <div className='allocated'>
+                        <div className='allocatedTitle'>{alLegendland} allocated nft for you.</div>
+                    </div>
+                    <div className='mintprogress' align={"left"}>
+                        Mint In Progress
+                    </div>
+                    <div className='minted' align={"left"}>
+                        {minLegendland}/800 Legendary Land minted
+                    </div>
+                    <div className='mintNft'>
+                        <div className='buttonName' onClick={()=>MintLegendNFT()}>Mint NFT</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>}
+
+    {!walletOn && 
+    <div className='notconnected'>
+        <div className='connectYourWallet'>
+            Please Connect Your wallet!
+        </div>
+        <div className='desConnect'>
+            There is a connect button top. Please click that and connect your metamask wallet.
+        </div>
+    </div>}
+
+    {!walletOn && 
+    <div className='notconnected'>
+        <div className='connectYourWallet'>
+            Please Connect Your wallet!
+        </div>
+        <div className='desConnect'>
+            There is a connect button top. Please click that and connect your metamask wallet.
+        </div>
+    </div>} 
+</div>
   )
 }
 
-export default WalletModal
+export default WC

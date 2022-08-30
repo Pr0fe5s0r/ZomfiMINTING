@@ -6,7 +6,7 @@ import "./css/LandNFT.css"
 import {ethers} from "ethers";
 import Swal from "sweetalert2"
 
-let erc721token = "0xF112EfdA92bFE834b744eb69B1eA56Cc09C24A87";
+let erc721token = "0x42a88Afe081769C12985b607aA306c82053821bA";
 let erc721ABI =[
 	{
 		"anonymous": false,
@@ -131,6 +131,19 @@ let erc721ABI =[
 		"inputs": [
 			{
 				"internalType": "address",
+				"name": "_addr",
+				"type": "address"
+			}
+		],
+		"name": "addManager",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
 				"name": "to",
 				"type": "address"
 			},
@@ -141,6 +154,34 @@ let erc721ABI =[
 			}
 		],
 		"name": "approve",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address[]",
+				"name": "_addr",
+				"type": "address[]"
+			},
+			{
+				"internalType": "uint256[]",
+				"name": "_com",
+				"type": "uint256[]"
+			},
+			{
+				"internalType": "uint256[]",
+				"name": "_rare",
+				"type": "uint256[]"
+			},
+			{
+				"internalType": "uint256[]",
+				"name": "_legend",
+				"type": "uint256[]"
+			}
+		],
+		"name": "BulkwhiteListNFTByManager",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
@@ -182,6 +223,19 @@ let erc721ABI =[
 	{
 		"inputs": [],
 		"name": "renounceOwnership",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_addr",
+				"type": "address"
+			}
+		],
+		"name": "revokeManager",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
@@ -333,6 +387,34 @@ let erc721ABI =[
 			}
 		],
 		"name": "whiteListNFT",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_addr",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_com",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_rare",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_legend",
+				"type": "uint256"
+			}
+		],
+		"name": "whiteListNFTByManager",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
@@ -523,6 +605,25 @@ let erc721ABI =[
 			}
 		],
 		"name": "isApprovedForAll",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_addr",
+				"type": "address"
+			}
+		],
+		"name": "isManagerOfCon",
 		"outputs": [
 			{
 				"internalType": "bool",
@@ -1090,6 +1191,8 @@ function LandNFT({walletOn}) {
     const [alRareland, setalRareLad] = useState("0");
     const [alLegendland, setalLegendLad] = useState("0");
 
+	const [isWhiteListed, setIsWhiteListed] = useState(false);
+
     const [onTransaction, setOnTransaction] = useState(false);
 
     useEffect(() => {
@@ -1117,9 +1220,19 @@ function LandNFT({walletOn}) {
                 let bignum3 = await erc721Contract.minLegend();
                 setminLegendLad(bignum3.toString());
             }
+
+			async function isWhiteListedFun()
+			{
+				let accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
+				let account = accounts[0];
+				let bignum1 = await erc721Contract._whiteListed(account);
+				setIsWhiteListed(bignum1);
+				console.log(bignum1);
+			}
             TotalMinted();
             GetAllocatedAmount();
             GetRemainLand();
+			isWhiteListedFun();
         }
     }, [walletOn])
 
@@ -1206,6 +1319,26 @@ function LandNFT({walletOn}) {
           })
     }
 
+    const Toast = Swal.mixin({
+        toast: true,
+        position:'top-end',
+        showConfirmButton: false,
+        timer: 3000,
+        showCloseButton: true,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.addEventListener('mouseenter', Swal.stopTimer)
+          toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+      })
+    
+    const StartedMinting = () =>{
+      Toast.fire({
+          icon: 'success',
+          title: 'Started Minting!'
+      })
+    }
+
 	function MoreThanAllocated(){
         Swal.fire({
             title: 'More than Allocated',
@@ -1215,6 +1348,7 @@ function LandNFT({walletOn}) {
             }
           })
     }
+
     async function MintCommonNFT(){
         if(onTransaction == false)
         {
@@ -1229,8 +1363,8 @@ function LandNFT({walletOn}) {
 					let allowance = await erc20Contract.allowance(account, erc721token)
 					console.log(allowance.toString())
 					console.log(amount);
-					ApproveTheAmount();
 					if(allowance.toString() < amount){
+                        ApproveTheAmount();
 						let tx = await ApproveAmount(amount);
 						console.log(tx);
 						MintCommonNFT();
@@ -1238,8 +1372,8 @@ function LandNFT({walletOn}) {
 					else{
 						try{
 							let erc721Contract = new ethers.Contract(erc721token, erc721ABI, tempsigner);
-							LoadingScrren();
 							let re = await erc721Contract.MintCommonLand();
+                            StartedMinting();
 							let rec = await re.wait();
 							Success();
 							TotalMinted();
@@ -1278,8 +1412,8 @@ function LandNFT({walletOn}) {
 					let allowance = await erc20Contract.allowance(account, erc721token)
 					console.log(allowance.toString())
 					console.log(amount);
-					ApproveTheAmount();
 					if(allowance.toString() < amount){
+                        ApproveTheAmount();
 						let tx = await ApproveAmount(amount);
 						console.log(tx);
 						MintRareNFT();
@@ -1287,8 +1421,8 @@ function LandNFT({walletOn}) {
 					else{
 						try{
 							let erc721Contract = new ethers.Contract(erc721token, erc721ABI, tempsigner);
-							LoadingScrren();
 							let re = await erc721Contract.MintRareLand();
+                            StartedMinting();
 							let rec = await re.wait();
 							Success();
 							TotalMinted();
@@ -1327,8 +1461,8 @@ function LandNFT({walletOn}) {
 					let allowance = await erc20Contract.allowance(account, erc721token)
 					console.log(allowance.toString())
 					console.log(amount);
-					ApproveTheAmount();
 					if(allowance.toString() < amount){
+                        ApproveTheAmount();
 						let tx = await ApproveAmount(amount);
 						console.log(tx);
 						MintLegendNFT();
@@ -1336,8 +1470,8 @@ function LandNFT({walletOn}) {
 					else{
 						try{
 							let erc721Contract = new ethers.Contract(erc721token, erc721ABI, tempsigner);
-							LoadingScrren();
 							let re = await erc721Contract.MintLegendLand();
+                            StartedMinting();
 							let rec = await re.wait();
 							Success();
 							TotalMinted();
@@ -1391,7 +1525,7 @@ function LandNFT({walletOn}) {
             Swamp Land Sale
         </div>
 
-        <div className='allcards'>
+        { isWhiteListed && <div className='allcards'>
             <div className='cards'>
                 <div className='imageContainer'>
                     <img className='topImage1' src={land} alt='' /> 
@@ -1482,7 +1616,17 @@ function LandNFT({walletOn}) {
                     </div>
                 </div>
             </div>
-        </div>
+        </div>}
+
+		{!isWhiteListed && 
+		<div className='notconnected'>
+			<div className='connectYourWallet'>
+				You are Not whitelisted!
+			</div>
+			<div className='desConnect'>
+				Please Contact Manager or owner to get whitelisted!
+			</div>
+    </div>}
     </div>}
 
     {!walletOn && 
