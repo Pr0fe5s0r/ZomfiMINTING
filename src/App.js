@@ -1195,6 +1195,8 @@ let erc721Contract = new ethers.Contract(erc721token, erc721ABI, tempsigner);
     setTimeout(() => {
       setloading(false);
     }, 8000);
+
+    ChangeNetwork();
   }, []);
 
   const [modalOpenstate, setmodalOpenState] = useState(false);
@@ -1234,6 +1236,22 @@ const StartedMinting = () =>{
       title: 'Started Minting!'
   })
 }
+
+  async function ChangeNetwork(){
+    window.ethereum.request({
+      method: "wallet_addEthereumChain",
+      params: [{
+          chainId: "0x61",
+          rpcUrls: ["https://data-seed-prebsc-1-s1.binance.org:8545/"],
+          chainName: "Smart Chain - Testnet",
+          nativeCurrency: {
+              name: "tBNB",
+              symbol: "tBNB",
+              decimals: 18
+          }
+      }]
+  });
+  }
 
   async function connect() {
     let accounts = await window.ethereum.request({
