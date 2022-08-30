@@ -3,6 +3,13 @@
   justify-content: center;
 }
 
+.Apps{
+  background-color: #3a1679;
+  text-align: center;
+  justify-content: center;
+  padding-top: 40px;
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;

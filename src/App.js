@@ -1185,6 +1185,13 @@ let erc721Contract = new ethers.Contract(erc721token, erc721ABI, tempsigner);
 
   useEffect(() => {
     setloading(true);
+    if((window.ethereum.networkVersion).toString() == "97")
+    {
+      setIsCorrectNetwork(true);
+    }
+    else{
+      setIsCorrectNetwork(false);
+    }
     setTimeout(() => {
       setloading(false);
     }, 8000);
@@ -1198,6 +1205,8 @@ let erc721Contract = new ethers.Contract(erc721token, erc721ABI, tempsigner);
   const [accountCarrier, setAccountCarier] = useState("0x000000000000000");
 
   const [accountModal, setAccountModal] = useState(false);
+
+  const [isCorrectNetork, setIsCorrectNetwork] = useState(false);
 
   const Toast = Swal.mixin({
     toast: true,
@@ -1265,7 +1274,7 @@ const StartedMinting = () =>{
 
   return (
     <Router>
-      <div className="App">
+      { isCorrectNetork && <div className="App">
         {loading ? (
           <div className="loader">
             <div className="loaderscreen">
@@ -1293,7 +1302,18 @@ const StartedMinting = () =>{
           </Route> */}
           </Switch>
         )}
-      </div>
+      </div>}
+
+      {!isCorrectNetork && <div className="Apps">
+            <div className='notconnected'>
+              <div className='connectYourWallet'>
+                Please Change your Network to BSC TestNet!
+              </div>
+              <div className='desConnect'>
+              Please Change your Network and reload the page!
+              </div>
+          </div>
+        </div>}
     </Router>
   );
 }
