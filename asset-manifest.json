@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/ZomfiMINTING/static/css/main.0c4fb87f.css",
-    "main.js": "/ZomfiMINTING/static/js/main.0a0121de.js",
+    "main.js": "/ZomfiMINTING/static/js/main.0eff9793.js",
     "static/js/787.deeec6c3.chunk.js": "/ZomfiMINTING/static/js/787.deeec6c3.chunk.js",
     "static/media/zomfi.png": "/ZomfiMINTING/static/media/zomfi.187f4da2dff693e1a655.png",
     "static/media/background.jpeg": "/ZomfiMINTING/static/media/background.695bd5fc0ef9172f47f9.jpeg",
@@ -10,11 +10,11 @@
     "static/media/coins.png": "/ZomfiMINTING/static/media/coins.52b39cfe5ec3103b86b6.png",
     "index.html": "/ZomfiMINTING/index.html",
     "main.0c4fb87f.css.map": "/ZomfiMINTING/static/css/main.0c4fb87f.css.map",
-    "main.0a0121de.js.map": "/ZomfiMINTING/static/js/main.0a0121de.js.map",
+    "main.0eff9793.js.map": "/ZomfiMINTING/static/js/main.0eff9793.js.map",
     "787.deeec6c3.chunk.js.map": "/ZomfiMINTING/static/js/787.deeec6c3.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.0c4fb87f.css",
-    "static/js/main.0a0121de.js"
+    "static/js/main.0eff9793.js"
   ]
 }
