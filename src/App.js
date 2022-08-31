@@ -1185,18 +1185,22 @@ let erc721Contract = new ethers.Contract(erc721token, erc721ABI, tempsigner);
 
   useEffect(() => {
     setloading(true);
-    if((window.ethereum.networkVersion).toString() == "97")
-    {
-      setIsCorrectNetwork(true);
-    }
-    else{
-      setIsCorrectNetwork(false);
+    async function checknetwork(){
+      const { chainId } = await provider.getNetwork()
+      console.log(chainId);
+      if(chainId == 97)
+      {
+        setIsCorrectNetwork(true);
+      }else{
+        setIsCorrectNetwork(false);
+      }
     }
     setTimeout(() => {
       setloading(false);
     }, 8000);
 
     ChangeNetwork();
+    checknetwork();
   }, []);
 
   const [modalOpenstate, setmodalOpenState] = useState(false);
